@@ -1,5 +1,5 @@
-// var express = require("express");
-// var app = express();
+var express = require("express");
+var app = express();
 var cron =  require('node-cron');
 require("dotenv").config();
 const axios = require("axios");
@@ -12,35 +12,35 @@ let openWeatherUrl = process.env.OPENWEATHER_API_URL;
 var smthCompleted = false;
 
 
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-//   })
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
   
 
-// app.post("/start_bot", function(req, res) {
-//     const { message } = req.body;
+app.post("/start_bot", function(req, res) {
+    const { message } = req.body;
     
-//     let reply = "Welcome to telegram weather bot";
-//     console.log(`${message.text}`);
-//     let talking_to_bot_check = (message.text || "").includes("@jareeboty_bot");
-//     let city_check = (message.text || "").toLowerCase().indexOf('/');
-//     if (talking_to_bot_check && (message.text || "").toLowerCase().indexOf("hi") !== -1) {
-//         sendMessage(telegram_url, message, reply, res);
-//     } else if ( talking_to_bot_check && (message.text || "").toLowerCase().indexOf("check") !== -1 && (city_check !== -1 )) {
-//         city = message.text.split('/')[1];
-//         get_forecast(city).then( response => {
-//             sendMessage(telegram_url, message, response, res)
-//         });
-//     } else if (talking_to_bot_check && (message.text || "").length > 0) {
-//         reply = "request not understood, please review and try again.";
-//         sendMessage(telegram_url, message, reply, res);
-//         return res.end();
-//     } else {
-//       console.log("Not sending a response");
-//     }
-// });
+    let reply = "Welcome to telegram weather bot";
+    console.log(`${message.text}`);
+    let talking_to_bot_check = (message.text || "").includes("@jareeboty_bot");
+    let city_check = (message.text || "").toLowerCase().indexOf('/');
+    if (talking_to_bot_check && (message.text || "").toLowerCase().indexOf("hi") !== -1) {
+        sendMessage(telegram_url, message, reply, res);
+    } else if ( talking_to_bot_check && (message.text || "").toLowerCase().indexOf("check") !== -1 && (city_check !== -1 )) {
+        city = message.text.split('/')[1];
+        get_forecast(city).then( response => {
+            sendMessage(telegram_url, message, response, res)
+        });
+    } else if (talking_to_bot_check && (message.text || "").length > 0) {
+        reply = "request not understood, please review and try again.";
+        sendMessage(telegram_url, message, reply, res);
+        return res.end();
+    } else {
+      console.log("Not sending a response");
+    }
+});
 
-// app.listen(process.env.PORT || 3000, () => console.log(`Telegram bot is listening on port ${process.env.PORT}`));
+app.listen(process.env.PORT || 3000, () => console.log(`Telegram bot is listening on port ${process.env.PORT}`));
 
 function sendMessage(url, message, reply, res) {
     axios.post(url, {chat_id: process.env.GROUP_ID,
@@ -137,9 +137,11 @@ function checkForOpenSlot(response) {
 //check_slot_availability(670);
 
 cron.schedule('*/30 * * * *', () => {
-    console.log('running a task in 30 minutes');
+    console.log('running a task in 1 minutes');
     check_slot_availability(670);
   }).start();
 
 console.log("Bot started");
 //runPeriodically();
+
+exports.check_slot_availability = check_slot_availability;
