@@ -133,15 +133,11 @@ function checkForOpenSlot(response) {
         console.log("ResultList was null");
     }
 } 
-
-//check_slot_availability(670);
-
 cron.schedule('*/30 * * * *', () => {
     console.log('running a task in 1 minutes');
     check_slot_availability(670);
   }).start();
 
 console.log("Bot started");
-//runPeriodically();
 
 exports.check_slot_availability = check_slot_availability;
